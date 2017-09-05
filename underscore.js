@@ -393,9 +393,17 @@ const purchases = [{"month":"February","price":37.85},{"month":"January","price"
 {"month":"January","price":14.25},{"month":"March","price":60.80},{"month":"February","price":23.65}]
 
 const purchasesByMonth = _.groupBy(purchases, "month"); // Use groupBy to group the purchases by the month that they were made.
-console.table(purchasesByMonth);
+console.log(purchasesByMonth);
 // Bonus Points
-const totalByMonth = 0; // Use the groupded purchasesByMonth and reduce to create a totalByMonth object.
+const totalByMonth = _.reduce(purchasesByMonth, function(memo, value, month, collection){
+    console.log(memo);
+     memo[month] = _.reduce(value, function(memo, num){ return memo + num.price; 
+    
+  }, 0);
+  return memo;
+  }, {});
+ // Use the groupded purchasesByMonth and reduce to create a totalByMonth object.
+
 
 // memoize
 //  Memoize lets us take a function that takes a lot of time to run.  And memeorize
@@ -426,9 +434,9 @@ function slowFibonnaci(n) {
 // millisecond keep increasing in (I recommend increments of 5 or so) until it's
 // taking a few seconds to complete.
 let slowN = 10;
-console.time('slowFibonnaci:' + slowN)
-console.log(slowFibonnaci(slowN));
-console.timeEnd('slowFibonnaci:' + slowN);
+// console.time('slowFibonnaci:' + slowN)
+// console.log(slowFibonnaci(slowN));
+// console.timeEnd('slowFibonnaci:' + slowN);
 
 let fastN = 10;
 
@@ -436,9 +444,9 @@ let fastFibonnaci = _.memoize(slowFibonnaci); // use memoize to create a fast fi
 // recursve structure that the slowFibonnaci is using, but have it be memoized
 // so that it'll remeber the previous times it's been called and increase the
 
-console.time('fastFibonnaci:' + fastN)
-console.log(fastFibonnaci(fastN));
-console.timeEnd('fastFibonnaci:' + fastN)
+// console.time('fastFibonnaci:' + fastN)
+// console.log(fastFibonnaci(fastN));
+// console.timeEnd('fastFibonnaci:' + fastN)
 
 // We can also use memoize on axios calls so that we only need to make the
 // request to the server once.
@@ -451,11 +459,11 @@ let getDeathstar = _.memoize(function(n){
 
 // Below we can measure the time it takes to get a return from the api call.
 
-console.time('getDeathstar')
-getDeathstar(9).then(e=>{
-  console.log(e.data)
-  console.timeEnd('getDeathstar')
-});
+// console.time('getDeathstar')
+// getDeathstar(9).then(e=>{
+//   console.log(e.data)
+//   console.timeEnd('getDeathstar')
+// });
 
 // getPersonApi `https://swapi.co/api/people/${n}`
 
@@ -470,22 +478,22 @@ let getJedi = _.memoize(function(n){
 // the time it takes for various parts of your code to run.  This can be
 // helpful in finding slow parts of your code that you want to improve.
 
-console.time('getJedi')
-getJedi(1).then(e=>{
-  console.log(e.data)
-  console.timeEnd('getJedi')
-});
+// console.time('getJedi')
+// getJedi(1).then(e=>{
+//   console.log(e.data)
+//   console.timeEnd('getJedi')
+// });
 
-setTimeout(()=>{
-  console.time('getDeathstar')
-  getDeathstar(9).then(e=>{
-    console.log(e.data)
-    console.timeEnd('getDeathstar')
-  });
+// setTimeout(()=>{
+//   console.time('getDeathstar')
+//   getDeathstar(9).then(e=>{
+//     console.log(e.data)
+//     console.timeEnd('getDeathstar')
+//   });
 
-  console.time('getJedi')
-  getJedi(1).then(e=>{
-    console.log(e.data)
-    console.timeEnd('getJedi')
-  });
-}, 2000)
+//   console.time('getJedi')
+//   getJedi(1).then(e=>{
+//     console.log(e.data)
+//     console.timeEnd('getJedi')
+//   });
+// }, 2000)
